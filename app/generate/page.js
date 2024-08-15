@@ -17,7 +17,14 @@ import {
   DialogActions,
   Grid,
 } from "@mui/material";
-import { collection, doc, getDoc } from "firebase/firestore";
+import { db } from "@/firebase";
+import {
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  writeBatch,
+} from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
@@ -213,7 +220,7 @@ export default function Generate() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={saveFlashcards}></Button>
+          <Button onClick={saveFlashcards}>Save</Button>
         </DialogActions>
       </Dialog>
     </Container>
