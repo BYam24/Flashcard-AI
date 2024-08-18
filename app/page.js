@@ -11,6 +11,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { useAuth } from "@clerk/nextjs";
 
 export default function Home() {
   const handleSubmit = async () => {
@@ -37,6 +38,9 @@ export default function Home() {
       console.warn(error.message);
     }
   };
+
+  const { isSignedIn } = useAuth();
+
   return (
     <Container maxWidth="lg">
       <Head>
@@ -70,9 +74,34 @@ export default function Home() {
         <Typography variant="h5">
           The easiest way to create flashcards from your text.
         </Typography>
-        <Button variant="contained" color="primary" sx={{ mt: 2 }}>
+        {/* <Button
+          variant="contained"
+          color="primary"
+          href={"/generate"}
+          sx={{ mt: 2 }}
+        >
           Get Started
-        </Button>
+        </Button> */}
+
+        {isSignedIn ? (
+          <Button
+            variant="contained"
+            color="primary"
+            href={"/generate"}
+            sx={{ mt: 2 }}
+          >
+            Get Started
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            color="primary"
+            href={"/sign-in"} // Redirect to the sign-in page if not signed in
+            sx={{ mt: 2 }}
+          >
+            Sign In to Get Started
+          </Button>
+        )}
       </Box>
 
       {/* Feature Section */}
@@ -119,22 +148,17 @@ export default function Home() {
                 borderRadius: 2,
               }}
             >
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h5" sx={{ md: "5px" }}>
                 Basic
               </Typography>
 
-              <Typography variant="h6" gutterBottom>
+              <Typography variant="h6" sx={{ md: "5px" }}>
                 $0.99/month
               </Typography>
-              <Typography gutterButtom>
+              <Typography gutterBottom>
                 Access to basic features and limited storage.
               </Typography>
-              <Button
-                variant="contained"
-                color="primary"
-                sx={{ mt: 2 }}
-                gutterBottom
-              >
+              <Button variant="contained" color="primary" sx={{ mt: 2, md: 5 }}>
                 Choose Basic
               </Button>
             </Box>
@@ -148,21 +172,20 @@ export default function Home() {
                 borderRadius: 2,
               }}
             >
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h5" sx={{ md: "5" }}>
                 Pro
               </Typography>
 
-              <Typography variant="h6" gutterBottom>
+              <Typography variant="h6" sx={{ md: "5" }}>
                 $2.99/month
               </Typography>
-              <Typography gutterButtom>
+              <Typography gutterBottom>
                 Unlimited flashcard and storage, with priority support{" "}
               </Typography>
               <Button
                 variant="contained"
                 color="primary"
-                sx={{ mt: 2 }}
-                gutterBottom
+                sx={{ mt: 2, md: 5 }}
                 onClick={handleSubmit}
               >
                 Choose Pro

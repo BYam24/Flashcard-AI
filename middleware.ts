@@ -1,6 +1,15 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
+import {NextResponse} from 'next/server'
 
 export default clerkMiddleware();
+
+export function middleware(request){
+  const isAuthenticated = true;
+  if (isAuthenticated) {
+    return NextResponse.next();
+  }
+  return NextResponse.redirect(new URL('/login', request.url))
+}
 
 export const config = {
   matcher: [
